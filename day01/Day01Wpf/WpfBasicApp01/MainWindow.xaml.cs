@@ -1,4 +1,5 @@
 ﻿using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using MySql.Data.MySqlClient;
 using System.Data;
 using System.Text;
@@ -38,7 +39,7 @@ namespace WpfBasicApp01
         }
 
 
-        private void LoadControlFromDb()
+        private async void LoadControlFromDb()
         {
             // 1. 연결문자열(DB연결 문자열은 필수)
             string connectionString = "Server=localhost;Database=bookrentalshop;Uid=root;Pwd=12345;Charset=utf8;";
@@ -67,7 +68,7 @@ namespace WpfBasicApp01
                 }
                 catch (MySqlException ex)
                 {
-                    // 나중에...
+                    await this.ShowMessageAsync($"에러! {ex.Message}", "에러");
                 }
             } // conn.Close() 자동발생
 
@@ -127,6 +128,8 @@ namespace WpfBasicApp01
 
                 DpcReleaseDate.Text = Convert.ToString(item.Row["ReleaseDate"]);
             }
+
+            await this.ShowMessageAsync($"처리완료!", "메시지");
         }
     }
 }
