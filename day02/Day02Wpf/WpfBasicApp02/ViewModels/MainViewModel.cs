@@ -2,13 +2,14 @@
 using MahApps.Metro.Controls.Dialogs;
 using MySql.Data.MySqlClient;
 using System.Collections.ObjectModel;
+using System.Security.AccessControl;
+using System.Windows;
 using WpfBasicApp02.Models;
 
 namespace WpfBasicApp02.ViewModels
 {
     public class MainViewModel : Conductor<object>
     {
-        private IDialogCoordinator _dialogCoordinator;  // 메시지박스, 다이얼로그 실행을 위한 변수
         public ObservableCollection<KeyValuePair<string, string>> Divisions { get; set; }
 
         public ObservableCollection<Book> Books { get; set; }
@@ -21,17 +22,25 @@ namespace WpfBasicApp02.ViewModels
             set
             {
                 _selectedBook = value;
-                NotifyOfPropertyChange(() =>  SelectedBook);
+                NotifyOfPropertyChange(() => SelectedBook);
             }
         }
 
-        public MainViewModel()
-        {
-            _dialogCoordinator = new DialogCoordinator();
+        private readonly IDialogCoordinator _dialogCoordinator;
 
+        public MainViewModel(IDialogCoordinator dialogCoordinator)
+        {
+            _dialogCoordinator = dialogCoordinator;
             LoadControlFromDb();
             LoadGridFromDb();
         }
+
+        //public MainViewModel()
+        //{
+        //    LoadControlFromDb();
+        //    LoadGridFromDb();
+        //}
+
         private void LoadControlFromDb()
         {
             // 1. 연결문자열(DB연결문자열은 필수)
@@ -65,7 +74,7 @@ namespace WpfBasicApp02.ViewModels
             } // conn.Close() 자동발생
 
             Divisions = divisions;
-            NotifyOfPropertyChange(() => Divisions);    // Caliburn.Micro가 제공하는 메서드
+            NotifyOfPropertyChange(() => Divisions); // Caliburn.Micro가 제공하는 메서드
         }
 
         private void LoadGridFromDb()
@@ -74,10 +83,10 @@ namespace WpfBasicApp02.ViewModels
             string connectionString = "Server=localhost;Database=bookrentalshop;Uid=root;Pwd=12345;Charset=utf8;";
             // 2. 사용쿼리, 기본쿼리로 먼저 작업 후 필요한 실제쿼리로 변경해도
             string query = @"SELECT b.Idx, b.Author, b.Division, b.Names, b.ReleaseDate, b.ISBN, b.Price,
-                        d.Names AS dNames
-                   FROM bookstbl AS b, divtbl AS d
-                  WHERE b.Division = d.Division
-                  ORDER by b.Idx";
+                                    d.Names AS dNames
+                               FROM bookstbl AS b, divtbl AS d
+                              WHERE b.Division = d.Division
+                              ORDER by b.Idx";
 
             ObservableCollection<Book> books = new ObservableCollection<Book>();
 
@@ -117,7 +126,6 @@ namespace WpfBasicApp02.ViewModels
 
         public async void DoAction()
         {
-            await _dialogCoordinator.ShowMessageAsync(this, "데이터로드!", "로드");
         }
     }
 }

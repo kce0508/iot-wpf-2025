@@ -5,10 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:cla="http://caliburnmicro.com"
+        xmlns:cal="http://caliburnmicro.com"
+        xmlns:dialogs="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:local="clr-namespace:WpfBasicApp02.Views"
         mc:Ignorable="d"
-        Title="MahApps DB연동(Caliburn.Micro)" Height="350" Width="600">
+        Title="MahApps DB연동(Caliburn.Micro)" Height="350" Width="600"
+        dialogs:DialogParticipation.Register="True">
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
@@ -19,7 +21,8 @@
         <DataGrid Grid.Row="0" Grid.Column="0" Margin="5" 
                   AutoGenerateColumns="False" IsReadOnly="True"
                   ItemsSource="{Binding Books}"
-                  SelectedItem="{Binding SelectedBook, Mode=TwoWay}">
+                  SelectedItem="{Binding SelectedBook, Mode=TwoWay}"
+                  cal:Message.Attach="DoAction">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Idx}" Header="순번" />
                 <DataGridTextColumn Binding="{Binding Division}" Header="장르" Visibility="Hidden" />
@@ -46,41 +49,40 @@
 
                 <!-- 그룹박스내 컨트롤 구성 -->
                 <mah:NumericUpDown 
-                    Grid.Row="0" Margin="3" Minimum="0"
-                    IsReadOnly="True"
-                    mah:TextBoxHelper.AutoWatermark="True"
-                    mah:TextBoxHelper.WatermarkAlignment="Left"
-                    mah:TextBoxHelper.Watermark="순번"
-                    Value="{Binding SelectedBook.Idx}"/>
+                Grid.Row="0" Margin="3" Minimum="0"
+                IsReadOnly="True"
+                mah:TextBoxHelper.AutoWatermark="True"
+                mah:TextBoxHelper.WatermarkAlignment="Left"
+                mah:TextBoxHelper.Watermark="순번" 
+                Value="{Binding SelectedBook.Idx}"/>
 
                 <ComboBox Grid.Row="1" Margin="3"
-                          SelectedValuePath="Key"
-                          DisplayMemberPath="Value"
-                          ItemsSource="{Binding Divisions}"
-                          mah:TextBoxHelper.Watermark="장르" 
-                          SelectedValue="{Binding SelectedBook.Division}"/>
+                      SelectedValuePath="Key"
+                      DisplayMemberPath="Value"
+                      ItemsSource="{Binding Divisions}"
+                      mah:TextBoxHelper.Watermark="장르" 
+                      SelectedValue="{Binding SelectedBook.Division}" />
 
                 <TextBox Grid.Row="2" Margin="3" 
-                         mah:TextBoxHelper.Watermark="책제목" 
-                         Text="{Binding SelectedBook.Names}"/>
+                     mah:TextBoxHelper.Watermark="책제목"
+                     Text="{Binding SelectedBook.Names}" />
 
                 <TextBox Grid.Row="3" Margin="3" 
-                         mah:TextBoxHelper.Watermark="책저자"
-                         Text="{Binding SelectedBook.Author}"/>
+                     mah:TextBoxHelper.Watermark="책저자" 
+                     Text="{Binding SelectedBook.Author}" />
 
                 <TextBox Grid.Row="4" Margin="3" 
-                         mah:TextBoxHelper.Watermark="ISBN" 
-                         Text="{Binding SelectedBook.ISBN}"/>
+                     mah:TextBoxHelper.Watermark="ISBN"
+                     Text="{Binding SelectedBook.ISBN}"/>
 
                 <DatePicker Grid.Row="5" Margin="3"
-                         mah:TextBoxHelper.Watermark="출판일" 
-                         SelectedDate="{Binding SelectedBook.ReleaseDate}"/>
+                        mah:TextBoxHelper.Watermark="출판일"
+                        SelectedDate="{Binding SelectedBook.ReleaseDate}" />
 
                 <TextBox Grid.Row="6" Margin="3" 
-                         mah:TextBoxHelper.Watermark="책가격" 
-                         Text="{Binding SelectedBook.Price}"/>
+                     mah:TextBoxHelper.Watermark="책가격"
+                     Text="{Binding SelectedBook.Price}" />
             </Grid>
         </GroupBox>
     </Grid>
-
 </mah:MetroWindow>
