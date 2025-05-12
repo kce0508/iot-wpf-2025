@@ -15,6 +15,7 @@ namespace WpfBookRentalShop01.ViewModels
             get => _greeting;
             set => SetProperty(ref _greeting, value);
         }
+
         private string _currentStatus;
 
         public string CurrentStatus
@@ -22,6 +23,7 @@ namespace WpfBookRentalShop01.ViewModels
             get => _currentStatus;
             set => SetProperty(ref _currentStatus, value);
         }
+
         private UserControl _currentView;
 
         public UserControl CurrentView
@@ -38,7 +40,7 @@ namespace WpfBookRentalShop01.ViewModels
         #region '화면 기능(이벤트)처리'
 
         [RelayCommand]
-        public void AppExit() 
+        public void AppExit()
         {
             MessageBox.Show("종료합니다!");
         }
@@ -52,7 +54,7 @@ namespace WpfBookRentalShop01.ViewModels
                 DataContext = vm,
             };
             CurrentView = v;
-            CurrentStatus = "책장르 관리 화면입니다";
+            CurrentStatus = "책장르관리 화면입니다";
         }
 
         [RelayCommand]

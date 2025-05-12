@@ -11,22 +11,23 @@ namespace WpfBasicApp01.ViewModels
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         #region 속성영역
-        private string _greeting;
 
-        public string Greeting { 
-            get => _greeting; 
-            set => SetProperty(ref _greeting, value);   // CommunityToolki.Mvvm의 핵심 C++ & == ref
+        private string _greeting;
+        public string Greeting
+        {
+            get => _greeting;
+            set => SetProperty(ref _greeting, value);  // CommunityToolkit.Mvvm의 핵심 C++ & == ref
         }
 
-        private string _currnetTime;
+        private string _currentTime;
 
         public string CurrentTime
         {
-            get => _currnetTime;
-            set => SetProperty(ref _currnetTime, value);
+            get => _currentTime;
+            set => SetProperty(ref _currentTime, value);
         }
 
-        private readonly DispatcherTimer _timer;    // ViewModel 내에서만 사용
+        private readonly DispatcherTimer _timer; // ViewModel 내에서만 사용
 
         #endregion
 
@@ -38,15 +39,14 @@ namespace WpfBasicApp01.ViewModels
             CurrentTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
 
             _timer = new DispatcherTimer();
-            _timer.Interval = TimeSpan.FromSeconds(1);  // 1초마다 변경
-            _timer.Tick += (sender, e) =>
+            _timer.Interval = TimeSpan.FromSeconds(1); // 1초마다 변경
+            _timer.Tick += (sender, e) => // 람다식으로 표현
             {
                 CurrentTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                 Debug.WriteLine($"[DEBUG] {CurrentTime}");
-                _logger.Log(LogLevel.Warn,$"{CurrentTime}");
+                _logger.Log(LogLevel.Fatal, $"{CurrentTime}");
             };
             _timer.Start(); // 타이머 시작
         }
-
     }
 }
