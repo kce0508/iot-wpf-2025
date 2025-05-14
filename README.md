@@ -343,6 +343,8 @@ https://github.com/user-attachments/assets/d03282cc-fc69-4f7b-aa5f-01fd7c967181
 9. 텍스트박스 한글 입력 우선 처리
 10. 실행시 텍스트박스에 포커스 가도록 처리
 
+    https://github.com/user-attachments/assets/9e041b44-55b6-4749-aca9-6a53c07cd284
+
 ## 6일차
 
 ### MovieFinder 2025 (계속)
