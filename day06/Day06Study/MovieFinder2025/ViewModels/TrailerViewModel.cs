@@ -3,10 +3,9 @@ using CommunityToolkit.Mvvm.Input;
 using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
 using MahApps.Metro.Controls.Dialogs;
+using MovieFinder2025.Helpers;
 using MovieFinder2025.Models;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Media.Imaging;
 
 namespace MovieFinder2025.ViewModels
@@ -15,10 +14,10 @@ namespace MovieFinder2025.ViewModels
     {
         private readonly IDialogCoordinator dialogCoordinator;
 
-        public TrailerViewModel(IDialogCoordinator coordinator, string movieTile)
+        public TrailerViewModel(IDialogCoordinator coordinator, string movieTitle)
         {
             this.dialogCoordinator = coordinator;
-            MovieTitle = movieTile; // 이렇게 해야 영화 제목으로 검색가능
+            MovieTitle = movieTitle; // 이렇게 해야 영화제목으로 검색가능
 
             YoutubeUri = "https://www.youtube.com";
 
@@ -36,7 +35,7 @@ namespace MovieFinder2025.ViewModels
         private ObservableCollection<YoutubeItem> _youtubeItems;
 
         public ObservableCollection<YoutubeItem> YoutubeItems
-        { 
+        {
             get => _youtubeItems;
             set => SetProperty(ref _youtubeItems, value);
         }
@@ -55,11 +54,11 @@ namespace MovieFinder2025.ViewModels
             get => _youtubeUri;
             set => SetProperty(ref _youtubeUri, value);
         }
+
         /// <summary>
         /// 핵심 Youtube Data Api v3 호출
         /// </summary>
-        
-        private async Task SearchYoutubeApi()
+        private async void SearchYoutubeApi()
         {
             await LoadDataCollection();
         }
@@ -69,33 +68,33 @@ namespace MovieFinder2025.ViewModels
             var service = new YouTubeService(
                 new BaseClientService.Initializer()
                 {
-                    ApiKey = "AIzaSyA5mikxUz8pJWIM1HMSnFljv6eLeBloLfc",
+                    ApiKey = "AIzaSyBB_akGVKmcfbMcxITYYEZO_3i7-X2GJmA",
                     ApplicationName = this.GetType().ToString()
                 });
 
             var req = service.Search.List("snippet");
-            req.Q = $"{MovieTitle} 공식 예고편";   //영화이름 Official Trailer API를 검색
+            req.Q = $"{MovieTitle} 공식 예고편";  // 영화이름만 사용해서 Youtube API를 검색
             req.Order = SearchResource.ListRequest.OrderEnum.Relevance;
             req.Type = "video";
-            req.MaxResults = 10;
+            req.MaxResults = 8;
 
             ObservableCollection<YoutubeItem> youtubeItems = new ObservableCollection<YoutubeItem>();
 
-            var res = await req.ExecuteAsync();    // Youtube API 서버에 요청된 값 실행하고 결과를 리턴(비동기)
+            var res = await req.ExecuteAsync(); // Youtube API서버에 요청된값 실행하고 결과를 리턴(비동기)
             foreach (var item in res.Items)
             {
                 youtubeItems.Add(new YoutubeItem
                 {
                     Title = item.Snippet.Title,
                     ChannelTitle = item.Snippet.ChannelTitle,
-                    URL = $"https://www.youtube.com/watch?v={item.Id.VideoId}",    // Youtube Play Link
+                    URL = $"https://www.youtube.com/watch?v={item.Id.VideoId}", // Youtube Play Link
                     Author = item.Snippet.ChannelId,
-
                     Thumbnail = new BitmapImage(new Uri(item.Snippet.Thumbnails.Default__.Url, UriKind.RelativeOrAbsolute))
                 });
             }
 
             YoutubeItems = youtubeItems;
+            Common.LOGGER.Info($"{MovieTitle}의 예고편 {YoutubeItems.Count} 조회완료!!");
         }
 
         [RelayCommand]
