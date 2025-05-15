@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35931.197
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieFinder2025", "MovieFinder2025\MovieFinder2025.csproj", "{7BA5D974-10CA-4501-BBB1-026F0DC8645D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7BA5D974-10CA-4501-BBB1-026F0DC8645D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BA5D974-10CA-4501-BBB1-026F0DC8645D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BA5D974-10CA-4501-BBB1-026F0DC8645D}.Debug|x64.ActiveCfg = Debug|x64
+		{7BA5D974-10CA-4501-BBB1-026F0DC8645D}.Debug|x64.Build.0 = Debug|x64
+		{7BA5D974-10CA-4501-BBB1-026F0DC8645D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BA5D974-10CA-4501-BBB1-026F0DC8645D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BA5D974-10CA-4501-BBB1-026F0DC8645D}.Release|x64.ActiveCfg = Release|x64
+		{7BA5D974-10CA-4501-BBB1-026F0DC8645D}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BBD72C2F-DCDA-4B6D-97A4-1DB54712B5D9}
+	EndGlobalSection
+EndGlobal
