@@ -368,3 +368,5 @@ https://github.com/user-attachments/assets/d03282cc-fc69-4f7b-aa5f-01fd7c967181
 6. 기타 작업 완료
 7. 결과 화면 
 
+    https://github.com/user-attachments/assets/808dc0dd-c25a-48c5-9053-dd75a87b7b73
+
