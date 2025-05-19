@@ -445,7 +445,8 @@ https://github.com/user-attachments/assets/d03282cc-fc69-4f7b-aa5f-01fd7c967181
     - new Connection 생성, Host 127.0.0.1, Port 1883 저장
     - CONNECT
 5. VS Code에서 [MqttPub.py](./day08/Pythons/MqttPub.py) 파일 생성
-    
+ 
+   https://github.com/user-attachments/assets/8a7b0394-d5e5-448a-9b13-7e64c8b573be
 
 ### 스마트홈 프로젝트 시작
 1. 화면 UI 변경
