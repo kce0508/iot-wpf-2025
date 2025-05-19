@@ -387,6 +387,10 @@ https://github.com/user-attachments/assets/d03282cc-fc69-4f7b-aa5f-01fd7c967181
 4. MVVM 초기화
 5. UI 디자인 및 구현
 
+
+    https://github.com/user-attachments/assets/a86d5ded-860c-49ba-8678-2d39baedcf8d
+
+
 ## 8일차
 
 ### 부산광역시 부산맛집 정보앱 (계속)
