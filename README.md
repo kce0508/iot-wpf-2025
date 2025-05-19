@@ -375,7 +375,7 @@ https://github.com/user-attachments/assets/d03282cc-fc69-4f7b-aa5f-01fd7c967181
 ### 부산광역시 부산맛집 정보앱
 1. [데이터포털](https://data.go.kr) OpenAPI 신청
 
-    <img src="">
+    <img src="./image/">
 2. WPF 프로젝트 생성
 3. NuGet 패키지 라이브러리 설치
     - CommunityToolkit.Mvvm
@@ -383,5 +383,13 @@ https://github.com/user-attachments/assets/d03282cc-fc69-4f7b-aa5f-01fd7c967181
     - Newtonsoft.Json
     - CefSharp.Wpf.NETCore(플랫폼 x64로 변경!)
     - NLog
+
 4. MVVM 초기화
 5. UI 디자인 및 구현
+
+## 8일차
+
+### 부산광역시 부산맛집 정보앱 (계속)
+1. 메인창 내용을 구글맵 창으로 이동
+2. CefSharp.Wpf로 구글맵지도 표현
+3. 위도(Latitude), 경도(Longitude) 표현
