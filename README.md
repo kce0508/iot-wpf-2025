@@ -393,3 +393,7 @@ https://github.com/user-attachments/assets/d03282cc-fc69-4f7b-aa5f-01fd7c967181
 1. 메인창 내용을 구글맵 창으로 이동
 2. CefSharp.Wpf로 구글맵지도 표현
 3. 위도(Latitude), 경도(Longitude) 표현
+
+
+    https://github.com/user-attachments/assets/b80ee941-4b5b-48db-81e5-bc5dd4c868b5
+
