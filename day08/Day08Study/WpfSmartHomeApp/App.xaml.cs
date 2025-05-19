@@ -1,7 +1,6 @@
-﻿using System.Configuration;
-using System.Data;
-using System.Windows;
+﻿using System.Windows;
 using WpfSmartHomeApp.ViewModels;
+using WpfSmartHomeApp.Views;
 
 namespace WpfSmartHomeApp
 {
