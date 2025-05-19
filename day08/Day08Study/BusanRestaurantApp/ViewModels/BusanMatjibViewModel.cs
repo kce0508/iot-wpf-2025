@@ -6,6 +6,7 @@ using CommunityToolkit.Mvvm.Input;
 using MahApps.Metro.Controls.Dialogs;
 using Newtonsoft.Json.Linq;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Text;
 using System.Windows;
@@ -16,6 +17,7 @@ namespace BusanRestaurantApp.ViewModels
     {
         IDialogCoordinator dialogCoordinator;
         private ObservableCollection<BusanItem> _busanItems;
+
         private int _pageNo;
         private int _numOfRows;
         private BusanItem _selectedMatjbItem;
@@ -29,7 +31,8 @@ namespace BusanRestaurantApp.ViewModels
             GetDataFromOpenApi();
         }
 
-        public ObservableCollection<BusanItem> BusanItems { 
+        public ObservableCollection<BusanItem> BusanItems
+        {
             get => _busanItems;
             set => SetProperty(ref _busanItems, value);
         }
@@ -47,7 +50,7 @@ namespace BusanRestaurantApp.ViewModels
         public async Task MatjibItemDoubleClick()
         {
             var viewModel = new GoogleMapViewModel();
-            viewModel.SelectedMatjbItem = SelectedMatjbItem;    // 메인 창에 있는 선택아이템을 그대로 구글맵쪽으로 전달
+            viewModel.SelectedMatjbItem = SelectedMatjbItem; // 메인창에 있는 선택아이템을 그대로 구글맵쪽으로 전달
             var view = new GoogleMapView
             {
                 DataContext = viewModel,
@@ -56,7 +59,7 @@ namespace BusanRestaurantApp.ViewModels
             view.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             Common.LOGGER.Info($"{SelectedMatjbItem.Lat}, {SelectedMatjbItem.Lng}");
             Common.LOGGER.Info("구글맵 오픈");
-            view.ShowDialog();  
+            view.ShowDialog();
         }
 
         [RelayCommand]
@@ -64,7 +67,7 @@ namespace BusanRestaurantApp.ViewModels
         {
             string baseUri = "http://apis.data.go.kr/6260000/FoodService/getFoodKr";
             string myServiceKey = "JzmUY2JqiPqaZHmZ7VDke8wMFu3m%2FCXZSUCawmglK99g1cw5ytYYWZ%2F4VmiJz2Wn5MB1aBEA7N0YlXlJz%2B%2FK8A%3D%3D";
-            
+
             StringBuilder strUri = new StringBuilder();
             strUri.Append($"serviceKey={myServiceKey}&");
             strUri.Append($"pageNo={PageNo}&");
@@ -90,12 +93,13 @@ namespace BusanRestaurantApp.ViewModels
                 if (status == "00")
                 {
                     var item = jsonResult["getFoodKr"]["item"];
-                    var jsonArray = item as JArray; 
+                    var jsonArray = item as JArray;
 
                     foreach (var subitem in jsonArray)
                     {
                         //Common.LOGGER.Info(subitem.ToString());
-                        busanItems.Add(new BusanItem {
+                        busanItems.Add(new BusanItem
+                        {
                             Uc_Seq = Convert.ToInt32(subitem["UC_SEQ"]),
                             Main_Title = Convert.ToString(subitem["MAIN_TITLE"]),
                             Gugun_Nm = Convert.ToString(subitem["GUGUN_NM"]),
@@ -104,7 +108,7 @@ namespace BusanRestaurantApp.ViewModels
                             Place = Convert.ToString(subitem["PLACE"]),
                             Title = Convert.ToString(subitem["TITLE"]),
                             SubTitle = Convert.ToString(subitem["SUBTITLE"]),
-                            Addr1 = Convert.ToString(subitem["ADDR1"]).Replace("\n",""),
+                            Addr1 = Convert.ToString(subitem["ADDR1"]).Replace("\n", ""),
                             Addr2 = Convert.ToString(subitem["ADDR2"]),
                             Cntct_Tel = Convert.ToString(subitem["CNTCT_TEL"]),
                             Homepage_Url = Convert.ToString(subitem["HOMEPAGE_URL"]),

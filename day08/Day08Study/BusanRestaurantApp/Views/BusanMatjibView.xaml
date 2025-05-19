@@ -10,7 +10,7 @@
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     mc:Ignorable="d"
-    Title="BusanMatjibView" Height="580" Width="1000"
+    Title="부산 맛집정보앱 v1.0" Height="580" Width="1000"
     Dialog:DialogParticipation.Register="{Binding}">
     <mah:MetroWindow.IconTemplate>
         <DataTemplate>
@@ -27,7 +27,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        
+
         <!-- UI 컨트롤 구성 -->
         <!-- Title 영역 -->
         <Label Grid.Row="0" Grid.Column="0" Content="부산 맛집정보" FontSize="20" FontWeight="Bold" Margin="5" />
@@ -50,14 +50,14 @@
                     </DataTemplate>
                 </Button.ContentTemplate>
             </Button>
-        </StackPanel>       
-        
+        </StackPanel>
+
         <!-- 데이터그리드 영역 -->
-        <DataGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="10"
+        <DataGrid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="10,5"
                   IsReadOnly="True" AutoGenerateColumns="False"
                   ItemsSource="{Binding BusanItems}"
                   SelectedItem="{Binding SelectedMatjbItem}"
-                  Style="{StaticResource MahApps.Styles.DataGrid.Azure}">   
+                  Style="{StaticResource MahApps.Styles.DataGrid.Azure}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseDoubleClick">
                     <i:InvokeCommandAction Command="{Binding MatjibItemDoubleClickCommand}" />
@@ -65,7 +65,7 @@
             </i:Interaction.Triggers>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="순번" 
-                            FontWeight="Bold" Binding="{Binding Uc_Seq}">
+                                    FontWeight="Bold" Binding="{Binding Uc_Seq}">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
                             <Setter Property="TextAlignment" Value="Right" />
@@ -75,13 +75,13 @@
                 <DataGridTemplateColumn Header="대표이미지" Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Image Source="{Binding Main_Img_Thumb}" Stretch="UniformToFill" 
-                   Width="50" Height="38" />
+                            <Image Source="{Binding Main_Img_Thumb}" Stretch="UniformToFill"
+                   Width="50" Height="38"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTextColumn Header="맛집명" 
-                            FontWeight="SemiBold" Binding="{Binding Main_Title}" />
+                                    FontWeight="SemiBold" Binding="{Binding Main_Title}" />
                 <DataGridTextColumn Header="구군" Binding="{Binding Gugun_Nm}" />
                 <!--<DataGridTextColumn Header="위치" Binding="{Binding Place}" />
                 <DataGridTextColumn Header="타이틀" Binding="{Binding Title}" />
@@ -107,6 +107,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+
             </DataGrid.Columns>
         </DataGrid>
         <!-- 상태표시줄 영역 -->
