@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System;
 using System.Configuration;
+using System.Data;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -22,6 +24,25 @@ namespace WpfSmartHomeApp.ViewModels
         private string? _currDateTime;
 
         private readonly DispatcherTimer _timer;
+
+        public MainViewModel()
+        {
+            CurrDateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+
+            _timer = new DispatcherTimer();
+            _timer.Interval = TimeSpan.FromSeconds(1);
+            _timer.Tick += (sender, e) =>
+            {
+                CurrDateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            };
+            _timer.Start();
+        }
+
+        public string? CurrDateTime
+        {
+            get => _currDateTime;
+            set => SetProperty(ref _currDateTime, value);
+        }
 
         // 온도 속성
         public double HomeTemp
