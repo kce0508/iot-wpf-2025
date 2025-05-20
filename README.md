@@ -392,9 +392,10 @@ https://github.com/user-attachments/assets/d03282cc-fc69-4f7b-aa5f-01fd7c967181
 ## 8일차
 
 ### 부산광역시 부산맛집 정보앱 (계속)
-1. 메인창 내용을 구글맵 창으로 이동
-2. CefSharp.Wpf로 구글맵지도 표현
-3. 위도(Latitude), 경도(Longitude) 표현
+1. 그리드 표현 아이템 조정
+2. 메인창 내용을 구글맵 창으로 이동
+3. CefSharp.Wpf로 구글맵지도 표현
+4. 위도(Latitude), 경도(Longitude) 표현
 
     https://github.com/user-attachments/assets/b80ee941-4b5b-48db-81e5-bc5dd4c868b5
 
@@ -461,5 +462,25 @@ https://github.com/user-attachments/assets/d03282cc-fc69-4f7b-aa5f-01fd7c967181
 ## 9일차
 
 ### 스마트홈 연동 모니터링앱 (계속)
+- MQTT 부터 시작
+
+#### 네트워크 확인
+- telnet 명령어로 서버서비스가 동작중인지 확인
+
+    ```shell
+    > telnet 아이피주소 포트번호
+    # MySQL에 접속가능한지 여부
+    > telnet 127.0.0.1 3306
+    # MQTT에 접속가능한지 여부
+    > telnet 127.0.0.1 1883
+    ```
 
 #### MQTT 시뮬레이션 (계속)
+1. MqttPub.py 소스코드에 Fake IoT 센서값 전달 코딩
+2. Fake 센싱값을 json으로 Publish
+3. C# MahApps.Metro 사용 MQTT 데이터 Subscriber앱
+    - CommunityToolkit.Mvvm
+    - MahApps.Metro
+    - MahApps.Metro.IconPacks
+    - Newtonsoft.Json
+    - MQTTnet
