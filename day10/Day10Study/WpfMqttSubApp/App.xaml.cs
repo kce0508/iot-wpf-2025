@@ -21,5 +21,4 @@ namespace WpfMqttSubApp
             view.ShowDialog();
         }
     }
-
 }

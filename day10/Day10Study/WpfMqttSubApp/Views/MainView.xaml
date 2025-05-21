@@ -35,6 +35,7 @@
                     Command="{Binding ConnectBrokerCommand}">
                 <TextBlock Text="CONNECT" Margin="5,0" />
             </Button>
+            
             <Label Content="Database Host" VerticalAlignment="Center" />
             <TextBox Margin="3" mah:TextBoxHelper.Watermark="DB주소 입력"
                      Width="100" Text="{Binding DatabaseHost}"/>

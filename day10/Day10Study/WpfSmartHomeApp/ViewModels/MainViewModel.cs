@@ -1,12 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MQTTnet;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using WpfSmartHomeApp.Helpers;
+using WpfSmartHomeApp.Models;
 
-// 스마트홈앱
+// 스마트홈앱 
 namespace WpfSmartHomeApp.ViewModels
 {
     public partial class MainViewModel : ObservableObject, IDisposable
@@ -26,14 +27,12 @@ namespace WpfSmartHomeApp.ViewModels
 
         // readonly는 생성자에서만 값을 할당. 그외는 불가
         private readonly DispatcherTimer _timer;
-        // 로그용 타이머 
-        private readonly DispatcherTimer _logTimer;
         // MQTT용 변수들
         private string TOPIC;
         private IMqttClient mqttClient;
         private string BROKERHOST;
 
-        // 생성자
+        // 생성자. 
         public MainViewModel()
         {
             CurrDateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
@@ -124,66 +123,71 @@ namespace WpfSmartHomeApp.ViewModels
         public async Task OnLoaded()
         {
             // 테스트로 집어넣은 가짜 데이터
-            //HomeTemp = 30;
-            //HomeHumid = 43.2;
+            /*
+            HomeTemp = 30;
+            HomeHumid = 43.2;
 
-            //DetectResult = "Detected Human!";
-            //IsDetectOn = true;
-            //RainResult = "Raining";
-            //IsRainOn = true;
-            //AirConResult = "Aircon On!";
-            //IsAirConOn = true;
-            //LightResult = "Light On~";
-            //IsLightOn = true;
+            DetectResult = "Detected Human!";
+            IsDetectOn = true;
+            RainResult = "Raining";
+            IsRainOn = true;
+            AirConResult = "Aircon On!";
+            IsAirConOn = true;
+            LightResult = "Light On~";
+            IsLightOn = true;
+            */
 
             // MQTT 접속부터 실행까지
-            TOPIC = "pknu/sh01/data";   // publish, subscribe 동시에 사용!
+            TOPIC = "pknu/sh01/data"; // publish, subcribe 동시에 사용!!
             BROKERHOST = "210.119.12.52"; // SmartHome MQTT Broker IP
 
             var mqttFactory = new MqttClientFactory();
             mqttClient = mqttFactory.CreateMqttClient();
 
-            // MQTT 클라이언트 접속 설정변수
+            // MQTT 클라이언트접속 설정변수
             var mqttClientOptions = new MqttClientOptionsBuilder()
                 .WithTcpServer(BROKERHOST)
                 .WithCleanSession(true)
                 .Build();
-            // MQTT 접속 후 이벤트 처리 메서드 선언
+            // MQTT 접속확인 이벤트 메서드 선언
             mqttClient.ConnectedAsync += MqttClient_ConnectedAsync;
             // MQTT 구독메시지 확인 메서드 선언
             mqttClient.ApplicationMessageReceivedAsync += MqttClient_ApplicationMessageReceivedAsync;
 
-            await mqttClient.ConnectAsync(mqttClientOptions);   // MQTT 브로커에 접속
+            await mqttClient.ConnectAsync(mqttClientOptions); // MQTT 브로커에 접속
         }
 
         // MQTT 구독메시지 확인 메서드
         private Task MqttClient_ApplicationMessageReceivedAsync(MqttApplicationMessageReceivedEventArgs arg)
         {
-            var topic = arg.ApplicationMessage.Topic;   // pknu/sh01/data
-            var payload = arg.ApplicationMessage.ConvertPayloadToString();  // byte -> UTF-8 문자열로 변환
+            var topic = arg.ApplicationMessage.Topic; // pknu/sh01/data
+            var payload = arg.ApplicationMessage.ConvertPayloadToString(); // byte -> UTF-8 문자열로 변환
 
-            var data = JsonConverter.DeserializeObject<SensingInfo>(payload);
+            var data = JsonConvert.DeserializeObject<SensingInfo>(payload);
             //Common.LOGGER.Info($@"Light:{data.L} / Rain:{data.R} / Temp:{data.T} / Humid:{data.H}
-            //                      Fan:{data.F}" / Vulernability:{data.V} / RealLight:{data.RL} )
+            //                      Fan:{data.F} / Vulernability:{data.V} / RealLight:{data.RL} / ChaimBell:{data.CB}");
+
+            // 
             HomeTemp = data.T;
             HomeHumid = data.H;
 
             IsDetectOn = data.V == "ON" ? true : false;
-            DetectResult = data.V == "ON" ? "Detectiont State!!" : "Normal State";
+            DetectResult = data.V == "ON" ? "Detection State!!" : "Normal State";
 
-            IsLightOn = data.RL == "ON" ? true : false ;
-            LightResult = data.RL == "ON" ? "Light on!" : "Light off";
+            IsLightOn = data.RL == "ON" ? true : false;
+            LightResult = data.RL == "ON" ? "Light On!" : "Light Off";
 
-            IsAirConOn = data.F == "ON" ? true: false;
+            IsAirConOn = data.F == "ON" ? true : false;
             AirConResult = data.F == "ON" ? "Aircon On!" : "Aircon off";
 
-            IsRainOn = data.R <= 300 ? true : false ;
-            RainResult = data.R <= 300 ? "Raining" : "No Rain";
+            IsRainOn = data.R <= 350 ? true : false;
+            RainResult = data.R <= 350 ? "Raining" : "No Rain";
 
-            return Task.CompletedTask; // 구독이 종료됨을 알려주는 리턴문
+            return Task.CompletedTask;  // 구독이 종료됨을 알려주는 리턴문
         }
 
-        private async Task MqttClient_ConnectedAsync(MqttClientConnectedEventArgs args)
+        // MQTT 접속확인 이벤트 메서드
+        private async Task MqttClient_ConnectedAsync(MqttClientConnectedEventArgs arg)
         {
             Common.LOGGER.Info($"{arg}");
             Common.LOGGER.Info("MQTT Broker 접속 성공!!");
